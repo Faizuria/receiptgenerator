@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Access - Resellora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #53717a 50%, #4cc9fa 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .no-access-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .no-access-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+        }
+
+        .access-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .no-access-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .no-access-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .access-message {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .access-message h3 {
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        .access-message p {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-3d {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+            transform: translateY(0);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-3d:hover::before {
+            left: 100%;
+        }
+
+        .btn-3d:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, rgba(76, 201, 250, 0.2), rgba(83, 113, 122, 0.2));
+            border-color: rgba(76, 201, 250, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, rgba(76, 201, 250, 0.3), rgba(83, 113, 122, 0.3));
+            border-color: rgba(76, 201, 250, 0.7);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(238, 90, 36, 0.2));
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.3), rgba(238, 90, 36, 0.3));
+            border-color: rgba(255, 107, 107, 0.7);
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .user-info h4 {
+            color: #4cc9fa;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .no-access-container {
+                padding: 2rem;
+            }
+
+            .no-access-title {
+                font-size: 2rem;
+            }
+
+            .btn-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-3d {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-access-container">
+        <div class="access-icon">🚫</div>
+        
+        <h1 class="no-access-title">Access Denied</h1>
+        <p class="no-access-subtitle">You don't have access to the Resellora dashboard</p>
+        
+        <div class="user-info" id="userInfo">
+            <h4>Discord User</h4>
+            <p id="userDetails">Loading user information...</p>
+        </div>
+        
+        <div class="access-message">
+            <h3>❌ No Active Subscription</h3>
+            <p>You need a valid subscription to access the Resellora dashboard. Please purchase a subscription through our Discord server to continue.</p>
+        </div>
+        
+        <div class="btn-container">
+            <a href="Resellora.html" class="btn-3d btn-primary">Back to Home</a>
+            <a href="#" class="btn-3d btn-secondary" onclick="joinDiscord()">Join Discord</a>
+        </div>
+    </div>
+
+    <script>
+        // Get user info from URL parameters
+        function loadUserInfo() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userData = {
+                name: urlParams.get('username') || 'Unknown User',
+                id: urlParams.get('userid') || 'Unknown ID',
+                reason: urlParams.get('reason') || 'No subscription found'
+            };
+            
+            document.getElementById('userDetails').textContent = `${userData.name} (ID: ${userData.id})`;
+        }
+
+        function joinDiscord() {
+            // Replace with your Discord invite link
+            window.open('https://discord.gg/YOUR_INVITE_LINK', '_blank');
+        }
+
+        // Load user info when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            
+            // Add loading animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

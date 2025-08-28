@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resellora Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #53717a 50%, #4cc9fa 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4cc9fa, #53717a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .user-details {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: bold;
+            color: #4cc9fa;
+        }
+
+        .user-plan {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dashboard Content */
+        .dashboard {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+
+        .welcome-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4cc9fa, #53717a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9fa, #53717a);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #4cc9fa, #53717a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4cc9fa;
+        }
+
+        .card-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .card-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-features li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-check {
+            color: #4cc9fa;
+            font-weight: bold;
+        }
+
+        .btn-3d {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            transform: translateY(0);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-3d:hover::before {
+            left: 100%;
+        }
+
+        .btn-3d:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, rgba(76, 201, 250, 0.2), rgba(83, 113, 122, 0.2));
+            border-color: rgba(76, 201, 250, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, rgba(76, 201, 250, 0.3), rgba(83, 113, 122, 0.3));
+            border-color: rgba(76, 201, 250, 0.7);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4cc9fa;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .welcome-text {
+                font-size: 2rem;
+            }
+
+            .user-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .user-details {
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../Resellora.png" alt="Resellora Logo">
+                </div>
+                <span>RESELLORA</span>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <div class="user-name" id="userName">User</div>
+                    <div class="user-plan" id="userPlan">14 Day Pass</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <h1 class="welcome-text fade-in">Welcome to Your Dashboard</h1>
+            <p class="dashboard-subtitle fade-in">Access all your Resellora tools and features</p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section fade-in">
+            <div class="stat-item">
+                <div class="stat-number">47</div>
+                <div class="stat-label">Receipts Generated</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="daysRemaining">12</div>
+                <div class="stat-label">Days Remaining</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Unlimited Access</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Mentorship -->
+            <div class="dashboard-card fade-in">
+                <div class="card-header">
+                    <div class="card-icon">🎓</div>
+                    <h3 class="card-title">Mentorship Program</h3>
+                </div>
+                <p class="card-description">Get expert guidance and tips from successful resellers in our community.</p>
+                <ul class="card-features">
+                    <li><span class="feature-check">✓</span> Expert Guidance</li>
+                    <li><span class="feature-check">✓</span> Community Access</li>
+                    <li><span class="feature-check">✓</span> Strategy Tips</li>
+                    <li><span class="feature-check">✓</span> 1-on-1 Sessions</li>
+                </ul>
+                <a href="#" class="btn-3d">Coming Soon</a>
+            </div>
+
+            <!-- Paper Receipts -->
+            <div class="dashboard-card fade-in">
+                <div class="card-header">
+                    <div class="card-icon">🧾</div>
+                    <h3 class="card-title">Paper Receipts</h3>
+                </div>
+                <p class="card-description">Generate authentic paper-style receipts with realistic formatting and details.</p>
+                <ul class="card-features">
+                    <li><span class="feature-check">✓</span> Paper Format</li>
+                    <li><span class="feature-check">✓</span> Realistic Design</li>
+                    <li><span class="feature-check">✓</span> Multiple Templates</li>
+                    <li><span class="feature-check">✓</span> Print Ready</li>
+                </ul>
+                <a href="paper_receipts.html" class="btn-3d btn-primary">Generate Paper Receipt</a>
+            </div>
+
+            <!-- Resellora Factory -->
+            <div class="dashboard-card fade-in">
+                <div class="card-header">
+                    <div class="card-icon">🏭</div>
+                    <h3 class="card-title">Resellora Factory</h3>
+                </div>
+                <p class="card-description">Access premium luxury brand factories and connect with trusted suppliers worldwide.</p>
+                <ul class="card-features">
+                    <li><span class="feature-check">✓</span> Luxury Brands</li>
+                    <li><span class="feature-check">✓</span> Direct Factory Access</li>
+                    <li><span class="feature-check">✓</span> Premium Quality</li>
+                    <li><span class="feature-check">✓</span> Global Suppliers</li>
+                </ul>
+                <a href="factory.html" class="btn-3d btn-primary">View Factories</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Handle Discord OAuth callback and load user data
+        async function loadUserData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            
+            if (code) {
+                // User just authenticated with Discord
+                try {
+                    // Exchange code for access token and get user info
+                    const userData = await exchangeCodeForUserData(code);
+                    
+                    // Store user data in localStorage
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    
+                    // Update UI with user data
+                    updateUserInterface(userData);
+                    
+                    // Clean up URL by removing the code parameter
+                    const newUrl = window.location.pathname;
+                    window.history.replaceState({}, document.title, newUrl);
+                    
+                } catch (error) {
+                    console.error('Error processing Discord authentication:', error);
+                    // Show error and redirect to login
+                    alert('Authentication failed. Please try again.');
+                    window.location.href = '../Resellora.html';
+                }
+            } else {
+                // Check if user data exists in localStorage
+                const storedUserData = localStorage.getItem('userData');
+                if (storedUserData) {
+                    const userData = JSON.parse(storedUserData);
+                    updateUserInterface(userData);
+                } else {
+                    // No authentication, redirect to login
+                    window.location.href = '../Resellora.html';
+                }
+            }
+        }
+
+        // Exchange Discord authorization code for user data
+        async function exchangeCodeForUserData(code) {
+            try {
+                // First, exchange the code for an access token
+                const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        client_id: '1285837978509246536',
+                        client_secret: 'AOcp-FF4q_NCfWul_dR7QYgOeOdR_wjK',
+                        grant_type: 'authorization_code',
+                        code: code,
+                        redirect_uri: 'http://localhost:3000/pages/dashboard.html'
+                    })
+                });
+
+                if (!tokenResponse.ok) {
+                    throw new Error('Failed to get access token');
+                }
+
+                const tokenData = await tokenResponse.json();
+                const accessToken = tokenData.access_token;
+
+                // Now get the user's information using the access token
+                const userResponse = await fetch('https://discord.com/api/users/@me', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+
+                if (!userResponse.ok) {
+                    throw new Error('Failed to get user data');
+                }
+
+                const userData = await userResponse.json();
+                
+                // Check user access in the database
+                const accessCheck = await checkUserAccess(userData.id);
+                
+                if (!accessCheck.has_access) {
+                    // Redirect to no access page
+                    const noAccessUrl = `no_access.html?username=${encodeURIComponent(userData.username)}&userid=${userData.id}&reason=${encodeURIComponent(accessCheck.message)}`;
+                    window.location.href = noAccessUrl;
+                    return null;
+                }
+                
+                // Get user's avatar URL
+                const avatarUrl = userData.avatar 
+                    ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
+                    : null;
+
+                return {
+                    name: userData.username,
+                    plan: accessCheck.subscription_type || 'Unknown Plan',
+                    avatar: userData.username.charAt(0).toUpperCase(),
+                    avatarUrl: avatarUrl,
+                    id: userData.id,
+                    email: userData.email,
+                    discriminator: userData.discriminator,
+                    daysRemaining: accessCheck.days_remaining,
+                    expiryDate: accessCheck.expiry_date
+                };
+                
+            } catch (error) {
+                console.error('Error fetching Discord user data:', error);
+                throw new Error('Failed to fetch Discord user data');
+            }
+        }
+
+        // Check user access in the database
+        async function checkUserAccess(userId) {
+            try {
+                // Call the access check API to get real data from database
+                const response = await fetch(`/check_access?user_id=${userId}`);
+                if (response.ok) {
+                    const accessData = await response.json();
+                    console.log('Real access data:', accessData);
+                    return accessData;
+                } else {
+                    console.error('Access check failed:', response.status);
+                    return {
+                        has_access: false,
+                        message: 'Access check failed',
+                        subscription_type: 'Unknown',
+                        expiry_date: null,
+                        days_remaining: 0
+                    };
+                }
+            } catch (error) {
+                console.error('Error checking user access:', error);
+                return {
+                    has_access: false,
+                    message: 'Database connection error',
+                    subscription_type: 'Unknown',
+                    expiry_date: null,
+                    days_remaining: 0
+                };
+            }
+        }
+
+        // Update the user interface with user data
+        function updateUserInterface(userData) {
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userPlan').textContent = userData.plan;
+            
+            // Update days remaining if available
+            if (userData.daysRemaining !== undefined) {
+                if (userData.plan === 'Lifetime') {
+                    document.getElementById('daysRemaining').textContent = '∞';
+                    // Update the label to show "Lifetime Access"
+                    const statLabel = document.querySelector('.stat-item:nth-child(2) .stat-label');
+                    if (statLabel) {
+                        statLabel.textContent = 'Lifetime Access';
+                    }
+                } else {
+                    document.getElementById('daysRemaining').textContent = userData.daysRemaining;
+                }
+            }
+            
+            const userAvatar = document.getElementById('userAvatar');
+            
+            if (userData.avatarUrl) {
+                // Display actual Discord avatar image
+                userAvatar.innerHTML = `<img src="${userData.avatarUrl}" alt="${userData.name}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+            } else {
+                // Fallback to text avatar
+                userAvatar.textContent = userData.avatar;
+            }
+        }
+
+        // Logout function
+        function logout() {
+            // Clear user data and authentication
+            localStorage.removeItem('userData');
+            localStorage.removeItem('discord_token');
+            sessionStorage.clear();
+            
+            // Redirect to landing page
+            window.location.href = '../Resellora.html';
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            
+            // Add loading animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Button click effects
+        document.querySelectorAll('.btn-3d').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple effect CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            .btn-3d {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

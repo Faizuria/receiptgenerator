@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resellora Factory - Resellora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #53717a 50%, #4cc9fa 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4cc9fa;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4cc9fa, #53717a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        /* Factory Cards Grid */
+        .factory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .factory-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .factory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9fa, #53717a);
+        }
+
+        .factory-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .factory-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #4cc9fa, #53717a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .factory-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #4cc9fa;
+        }
+
+        .factory-description {
+            text-align: center;
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .factory-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .factory-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .factory-features li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-check {
+            color: #4cc9fa;
+            font-weight: bold;
+        }
+
+        .view-factory-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            transform: translateY(0);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .view-factory-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .view-factory-btn:hover::before {
+            left: 100%;
+        }
+
+        .view-factory-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Brand Cards Grid */
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .brand-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .contact-info strong {
+            color: #4cc9fa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .factory-grid, .brands-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hidden by default */
+        .brands-section {
+            display: none;
+        }
+
+        .back-to-factories {
+            display: none;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-to-factories .btn-3d {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-to-factories .btn-3d:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../Resellora.png" alt="Resellora Logo">
+                </div>
+                <span>RESELLORA</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="#" class="back-btn" onclick="goBack()">Back</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title fade-in">Resellora Factory</h1>
+            <p class="page-subtitle fade-in">Order from our trusted factories</p>
+        </div>
+
+        <!-- Back to Factories Button -->
+        <div class="back-to-factories" id="backToFactories">
+            <a href="#" class="btn-3d" onclick="showFactories()">← Back to Factories</a>
+        </div>
+
+        <!-- Factory Cards -->
+        <div class="factory-grid" id="factoryGrid">
+            <!-- Resellora 1 Factory -->
+            <div class="factory-card fade-in" onclick="showBrands()">
+                <div class="factory-icon">🏭</div>
+                <h3 class="factory-name">Resellora 1 Factory</h3>
+                <p class="factory-description">Premium luxury brand factory with direct access to the world's finest suppliers and manufacturers.</p>
+                <ul class="factory-features">
+                    <li><span class="feature-check">✓</span> Luxury Brand Access</li>
+                    <li><span class="feature-check">✓</span> Premium Quality</li>
+                    <li><span class="feature-check">✓</span> Direct Suppliers</li>
+                    <li><span class="feature-check">✓</span> Global Shipping</li>
+                </ul>
+                <button class="view-factory-btn">View Brands</button>
+            </div>
+        </div>
+
+        <!-- Brands Section -->
+        <div class="brands-section" id="brandsSection">
+            <div class="page-header">
+                <h1 class="page-title fade-in">Resellora 1 Factory - Brands</h1>
+                <p class="page-subtitle fade-in">Select your desired luxury brand to connect with our suppliers</p>
+            </div>
+
+            <!-- Brand Cards -->
+            <div class="brands-grid">
+                <!-- Luxury Fashion Brands -->
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Louis Vuitton</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy LV products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Chanel</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Chanel products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Dior</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Dior products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">YSL</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy YSL products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Gucci</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Gucci products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Bottega Veneta</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy BV products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Loewe</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Loewe products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Prada</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Prada products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Celine</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Celine products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Valentino</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Valentino products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Miu Miu</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Miu Miu products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Hermès</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Hermès products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Tiffany & Co</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Tiffany products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Goyard</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Goyard products<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <!-- Watch Brands -->
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Rolex</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Rolex watches<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Patek Philippe</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Patek Philippe watches<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Omega</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Omega watches<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Richard Mille</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Richard Mille watches<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Cartier</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Cartier watches<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+
+                <div class="brand-card fade-in">
+                    <h3 class="brand-name">Tudor</h3>
+                    <div class="contact-info">
+                        <strong>Proxy Sent Me</strong><br>
+                        I want to buy Tudor watches<br>
+                        <strong>+86 19870062242</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Show brands section
+        function showBrands() {
+            document.getElementById('factoryGrid').style.display = 'none';
+            document.getElementById('brandsSection').style.display = 'block';
+            document.getElementById('backToFactories').style.display = 'block';
+        }
+
+        // Show factories section
+        function showFactories() {
+            document.getElementById('factoryGrid').style.display = 'grid';
+            document.getElementById('brandsSection').style.display = 'none';
+            document.getElementById('backToFactories').style.display = 'none';
+        }
+
+        // Go back function
+        function goBack() {
+            window.history.back();
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add loading animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adidas Receipt</title>
+  <style>
+    body {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .receipt {
+      font-size: 10px;
+      background: #fff;
+      color: #000;
+      padding: 10px 12px;
+      border: 1px solid #eee;
+      width: 220px;
+      min-height: 900px;
+      box-shadow: 0 2px 8px #0001;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+    .center {
+      text-align: center;
+    }
+    .logo {
+      margin-bottom: 12px;
+      margin-top: 18px;
+    }
+    .logo img {
+      width: 90px;
+      height: auto;
+    }
+    .store-info {
+      margin-bottom: 8px;
+      font-size: 10px;
+      text-align: center;
+      line-height: 1.2;
+      font-weight: bold;
+    }
+    .receipt-header {
+      margin-bottom: 14px;
+      font-size: 10px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .item-block {
+      margin: 12px 0 0 0;
+      font-size: 10px;
+    }
+    .item-code-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      margin-bottom: 0;
+    }
+    .item-desc-line {
+      font-size: 10px;
+      margin-bottom: 6px;
+      margin-left: 2px;
+    }
+    .totals {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      /* border-top: 1px solid #000; */
+      padding-top: 0;
+      font-size: 10px;
+    }
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+    .payment-section {
+      margin-top: 6px;
+      font-size: 10px;
+      text-align: left;
+      line-height: 1.2;
+    }
+    .footer-section {
+      margin-top: 18px;
+      font-size: 8.5px;
+      text-align: left;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .barcode {
+      text-align: center;
+      margin: 18px 0 2px 0;
+    }
+    .barcode img {
+      width: 180px;
+      height: 32px;
+    }
+    .social {
+      text-align: center;
+      font-size: 8.5px;
+      margin-top: 2px;
+    }
+    .receipt-id {
+      text-align: center;
+      font-size: 8.5px;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <div class="center logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas Logo">
+    </div>
+    <div class="store-info" contenteditable="true">
+      622A  New York Spring Street<br>
+      112 Spring Street<br>
+      New York NY 10012 United States<br>
+      (212) 965 9648
+    </div>
+    <div class="receipt-header" contenteditable="true">
+      27/12/2019   10:15<br>
+      VISA: 6270********1803  100.15<br>
+      No#: 6070888877<br>
+      Auth #: 000000<br>
+      A = shop sale
+    </div>
+    <div class="item-block">
+      <div class="item-code-line">
+        <span contenteditable="true">FX4145  YEEZY BOOST  350.00 *</span>
+        <span contenteditable="true">100.00</span>
+      </div>
+      <div class="item-desc-line" contenteditable="true">
+        1 350 V2 YECHEL/9.5
+      </div>
+    </div>
+    <div class="totals">
+      <div class="totals-row">
+        <span contenteditable="true">Subtotal</span>
+        <span contenteditable="true">100.00</span>
+      </div>
+      <div class="totals-row">
+        <span contenteditable="true">ACC 10.15</span>
+        <span contenteditable="true"></span>
+      </div>
+      <div class="totals-row">
+        <span contenteditable="true">TAC 100.15</span>
+        <span contenteditable="true"></span>
+      </div>
+      <div class="totals-row">
+        <span contenteditable="true">Total</span>
+        <span contenteditable="true">100.15</span>
+      </div>
+      <div class="totals-row">
+        <span contenteditable="true">Balance: 100.15</span>
+        <span contenteditable="true"></span>
+      </div>
+    </div>
+    <div class="footer-section" contenteditable="true">
+      REFUND POLICY: MERCHANDISE MAY BE RETURNED OR EXCHANGED WITHIN 60 DAYS WITH AN ORIGINAL RECEIPT. AFTER 30 DAYS, OR WITHOUT A RECEIPT, MERCHANDISE MAY BE EXCHANGED OR RETURNED FOR A STORE CREDIT. SALE ITEMS CANNOT BE RETURNED OR EXCHANGED. DO NOT RETURN WITHOUT A RECEIPT. VALID ID REQUIRED FOR RETURN WITHOUT RECEIPT. MERCHANDISE MUST BE NEW AND UNUSED, WITH TAGS ATTACHED AND FOOTWEAR IN ORIGINAL BOXES.<br><br>
+      WE THANK YOU FOR SHOPPING WITH ADIDAS. SHOP ONLINE AT WWW.ADIDAS.COM
+    </div>
+    <div class="social" contenteditable="true">
+      Follow us on Twitter: @adidasnyc<br>
+      Instagram: @adidasnyc
+    </div>
+    <div class="barcode">
+      <img src="https://www.shutterstock.com/image-illustration/illustration-long-horizontal-barcode-600nw-2488499029.jpg" alt="barcode">
+    </div>
+    <div class="receipt-id" contenteditable="true">
+      1 652518083
+    </div>
+  </div>
+  <div style="text-align:center; margin-top: 20px;">
+    <button id="downloadBtn" style="padding:8px 20px; font-size:14px; border:1px solid #bbb; background:#f8f8f8; cursor:pointer; border-radius:4px;">Download</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      var receipt = document.querySelector('.receipt');
+      html2canvas(receipt, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+        imageTimeout: 0,
+      }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = 'adidas-receipt.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    });
+  </script>
+</body>
+</html>

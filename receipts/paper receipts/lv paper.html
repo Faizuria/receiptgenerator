@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Louis Vuitton Receipt</title>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style>
+    body {
+      background: #ededed;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 40px;
+    }
+    .receipt {
+      background: #fff;
+      width: 270px;
+      min-height: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 18px 18px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid #ddd;
+      font-size: 13px;
+      color: #222;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 0.32em;
+      text-align: center;
+      margin-bottom: 8px;
+      margin-top: 10px;
+    }
+    .center {
+      text-align: center;
+    }
+    .address {
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+    .storeinfo {
+      font-size: 13px;
+      margin-bottom: 32px;
+      line-height: 1.4;
+    }
+    .footer {
+      font-size: 11px;
+      color: #222;
+      margin-top: 18px;
+      text-align: left;
+      line-height: 1.4;
+    }
+    .barcode {
+      display: block;
+      margin: 10px auto 0 auto;
+      width: 220px;
+      height: 40px;
+    }
+    .barcode-num {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-top: 2px;
+    }
+    .client-copy {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    pre {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      margin: 0 0 0 0;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1.2;
+    }
+    .spacer {
+      height: 32px;
+    }
+    .spacer-small {
+      height: 18px;
+    }
+    .download-btn {
+      display: block;
+      margin: 24px auto 0 auto;
+      padding: 10px 24px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .download-btn:hover {
+      background-color: #444;
+    }
+    [contenteditable="true"] {
+      outline: none;
+      border: none;
+      background: none;
+      min-width: 10px;
+      min-height: 1em;
+      padding: 0;
+    }
+    [contenteditable="true"]:hover {
+      background: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt" id="receipt">
+    <div class="logo" contenteditable="true">LOUIS VUITTON</div>
+    <div class="address">
+      <div contenteditable="true">Louis Vuitton Manchester  Selfridges</div>
+      <div contenteditable="true">1 Exchange Square</div>
+      <div contenteditable="true">M3 1BD Manchester GM</div>
+      <div contenteditable="true">00441381880242</div>
+    </div>
+    <div class="storeinfo">
+      <div contenteditable="true">Store: 1106   Register: 3</div>
+      <div contenteditable="true">Date: 24/2/23   Time: 9:13</div>
+      <div contenteditable="true">Ticket: 1797</div>
+      <div contenteditable="true">Cashier: KIMBERLY B.</div>
+    </div>
+    <div class="spacer"></div>
+    <pre contenteditable="true">Item         Qty   Price    Amount
+AEDISPCON0838 NOMAD SANDAL 10CM
+1A3M01        1   -680.00  -680.00
+COLOR:NOIR
+SIZE:38
+WIDTH:NORMAL
+
+RETURN
+STORE:1106
+Date:24/2/23
+Ticket:1790
+Register:3
+
+AEDISPCON0838 NOMAD SANDAL 10CM
+1A3M01            680.00   680.00
+COLOR:NOIR
+SIZE:38
+WIDTH:NORMAL
+</pre>
+    <div class="spacer"></div>
+    <pre contenteditable="true" style="text-align:right;">                    Total    0.00
+</pre>
+    <pre contenteditable="true">TaxX   Taxable Amt.   Tax Amt.</pre>
+    <div class="footer" contenteditable="true">
+      For returns and exchanges, please refer to Selfridges<br>
+      policy.<br><br>
+      LOUIS VUITTON UK LTD REGISTERED OFFICE: 6 NEW ST SQUARE,<br>
+      LONDON, EC4A 3AT REGISTERED IN ENGLAND NO: 1362390 VAT GB<br>
+      340 5705 56
+    </div>
+    <pre class="sold-return-row" contenteditable="true">Sold Item Count = 1
+Returned Item Count = 1</pre>
+    <img class="barcode" src="https://barcode.tec-it.com/barcode.ashx?data=T113113L311L6114M64AQ1X9A&code=Code128&translate-esc=false" alt="barcode">
+    <div class="barcode-num" contenteditable="true">T113113L311L6114M64AQ1X9A</div>
+    <div class="client-copy" contenteditable="true">Client Copy</div>
+  </div>
+  <button class="download-btn" onclick="downloadReceipt()">Download Receipt</button>
+  <script>
+    function downloadReceipt() {
+      const receipt = document.getElementById('receipt');
+      html2canvas(receipt, {
+        useCORS: true,
+        allowTaint: true,
+        imageTimeout: 0
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'lv-receipt.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
